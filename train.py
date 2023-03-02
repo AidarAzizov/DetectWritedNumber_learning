@@ -227,6 +227,7 @@ def test(CNNnet, criterion, batch_size):
     maximum_class_probabilities = []
 
     CNNnet.eval()
+    torch.set_grad_enabled(False)
 
     true_positive = 0
     false_positive = 0
@@ -295,11 +296,11 @@ if __name__ == '__main__':
     loss = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(mnist_net.parameters(), lr=5e-4)
 
-    val_loss, val_acc = train(CNNnet=mnist_net, epoches=1, batch_size=50, optimizer=optimizer, criterion=loss)
+    val_loss, val_acc = train(CNNnet=mnist_net, epoches=25, batch_size=50, optimizer=optimizer, criterion=loss)
     print_loss_acc(loss=val_loss, acc=val_acc)
 
     torch.save(mnist_net, model_filename)
-    # torch.save(mnist_net.state_dict(), './mnist_weights.pt')
+    torch.save(mnist_net.state_dict(), './mnist_weights.pt')
 
     mnist_net = torch.load(model_filename)
     test(CNNnet=mnist_net, batch_size=50, criterion=loss)
