@@ -86,6 +86,7 @@ def test(CNNnet, criterion, test_dataloader, trusted_threshold):
     batch_size = test_dataloader.batch_size
 
     CNNnet.eval()
+    torch.set_grad_enabled(False)
 
     true_positive = np.full((10), 1e-5)
     false_positive = np.full((10), 1e-5)
@@ -162,6 +163,7 @@ def check(CNNnet, check_dataloader, trusted_threshold):
     batch_size = check_dataloader.batch_size
 
     CNNnet.eval()
+    torch.set_grad_enabled(False)
 
     with open(check_output_name, 'w', newline='') as csvfile:
         fieldnames = ['feature_name', 'logit 0', 'logit 1', 'logit 2', 'logit 3', 'logit 4',
